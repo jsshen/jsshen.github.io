@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-12-23T06:13:25.180Z</updated>
+  <updated>2020-06-03T05:54:47.825Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HTTP和TCP</title>
+    <link href="http://yoursite.com/2020/06/03/HTTP%E5%92%8CTCP/"/>
+    <id>http://yoursite.com/2020/06/03/HTTP和TCP/</id>
+    <published>2020-06-03T05:53:30.343Z</published>
+    <updated>2020-06-03T05:54:47.825Z</updated>
+    
+    <content type="html"><![CDATA[<p>http协议：浏览器与服务器之间通信的协议，主要有请求和响应的过程。基本流程为：</p><ol><li>在浏览器输入网址</li><li>浏览器向dns发送请求，获取ip地址</li><li>浏览器用ip地址向服务器发送请求</li><li>服务器接收请求后处理</li><li>处理完成后生成结果返回给浏览器</li><li>浏览器接收响应后解析并渲染</li></ol><p>渲染的过程：</p><ol><li>通过html代码生成dom树</li><li>根据dom树和css规则生成渲染树</li><li>确定渲染树中元素的位置、大小</li><li>浏览器根据渲染树绘制页面</li></ol><p>http请求是无状态的，每一次的请求都当做是一次新的请求，如果想让其之间 有关联，那就要使用到cookie和session，浏览器请求到服务器之后，服务器会开启session机制，设置一个sessionid在响应头返回，浏览器通过cookie将sessionid存储下来，下一次请求的时候请求头中的cookie就会携带sessionid到服务器，看是否与服务端的sessionid相匹配。</p><h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><blockquote><p>请求报文：请求行/请求头/请求数据</p></blockquote><p>请求行：由请求方法、请求地址和协议版本组成</p><h4 id="常见请求头如下："><a href="#常见请求头如下：" class="headerlink" title="常见请求头如下："></a>常见请求头如下：</h4><ol><li>HOST -&gt; 接受请求的服务器地址可以是ip:端口号，也可以是域名</li><li>User-Agent -&gt; 发送请求的应用程序信息</li><li>Connection -&gt; 指定与连接相关的属性，如Keep-Alive</li><li>Accept-Charset：通知服务端可以发送的编码格式</li><li>Accept-Encoding：通知服务端可以发送的数据压缩格式</li><li>Accept-Language：通知服务端可以发送的语言</li></ol><h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><blockquote><p>响应报文：状态行/响应头/响应正文</p></blockquote><h4 id="常见状态："><a href="#常见状态：" class="headerlink" title="常见状态："></a>常见状态：</h4><ul><li>1xx：指示信息–表示请求已接收，继续处理。</li><li>2xx：成功–表示请求已被成功接收、理解、接受。</li><li>3xx：重定向–要完成请求必须进行更进一步的操作。</li><li>4xx：客户端错误–请求有语法错误或请求无法实现。</li><li>5xx：服务器端错误–服务器未能实现合法的请求。</li></ul><h4 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h4><ul><li>200： 响应成功</li><li>302： 页面重定向</li><li>400： 客户端请求有语法错误，不能被服务器识别</li><li>403： 服务器收到请求，但是拒绝提供服务</li><li>404： 请求资源不存在</li><li>500： 服务器内部错误</li></ul><h4 id="常见响应头"><a href="#常见响应头" class="headerlink" title="常见响应头"></a>常见响应头</h4><ul><li>Server -&gt; 服务器应用程序软件的名称和版本</li><li>Content-Type -&gt; 响应正文的类型（是图片还是二进制字符串）</li><li>Content-length -&gt; 响应正文长度</li><li>Content-Charset -&gt; 响应正文的编码</li><li>Content-Encoding -&gt; 响应正文使用的数据压缩格式</li><li>Content-language -&gt; 响应正文使用的语言</li></ul><h2 id="三次握手和四次挥手详细介绍"><a href="#三次握手和四次挥手详细介绍" class="headerlink" title="三次握手和四次挥手详细介绍"></a>三次握手和四次挥手详细介绍</h2><h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>要说http就绕不开tcp，TCP协议对应于传输层，而HTTP协议对应于应用层，从本质上来说，二者没有可比性。但是，http是基于tcp协议的。</p><h3 id="什么是三次握手和四次挥手"><a href="#什么是三次握手和四次挥手" class="headerlink" title="什么是三次握手和四次挥手"></a>什么是三次握手和四次挥手</h3><p>TCP是一种面向连接的单播协议，在发送数据前，通信双方必须在彼此间建立一条连接。所谓的“连接”，其实是客户端和服务器的内存里保存的一份关于对方的信息，如ip地址、端口号等。</p><p>TCP提供了一种可靠、面向连接、字节流、传输层的服务，采用三次握手建立一个连接。采用4次挥手来关闭一个连接。</p><h3 id="为什么要进行三次握手和四次挥手"><a href="#为什么要进行三次握手和四次挥手" class="headerlink" title="为什么要进行三次握手和四次挥手"></a>为什么要进行三次握手和四次挥手</h3><p>==三次握手==</p><ol><li><p>第一次握手 –&gt; 客户端发送网络包，服务端收到了。服务端得出结论：服务端接收能力，客户端发送能力没问题。</p></li><li><p>第二次握手 –&gt; 服务端发包，客户端收到了。客户端得出结论：服务端和客户端的接收、发送能力都没问题。  </p></li><li><p>第三次握手 –&gt; 客户端再次发包，服务端收到了。服务端得出结论：服务端和客户端的接收、发送能力都没问题。</p></li></ol><p>总结： 结果上面三次握手的过程，客户端和服务端都确认了自己的接收能力正常，之后就可以正常通信了。</p><p>==四次挥手==</p><p>这是因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，己方是否现在关闭发送数据通道，需要上层应用来决定，因此，己方ACK和FIN一般都会分开发送。</p><h3 id="三次握手和四次挥手执行过程"><a href="#三次握手和四次挥手执行过程" class="headerlink" title="三次握手和四次挥手执行过程"></a>三次握手和四次挥手执行过程</h3><ul><li>ACK —— 确认，使得确认号有效。 </li><li>RST —— 重置连接（经常看到的reset by peer）就是此字段搞的鬼。 </li><li>SYN —— 用于初如化一个连接的序列号。 </li><li>FIN —— 该报文段的发送方已经结束向对方发送数据。</li></ul><p>==三次握手过程==</p><ol><li><p>客户端发送一个SYN(J)包给服务端，然后等待服务端的ACK回复，进入SYN-SENT状态</p></li><li><p>服务端接收到客户端的SYN包后，返回一个ACK(J+1)和一个自己的SYN包(K)，服务端进入进入SYN-RECIVED状态。</p></li><li><p>客户端收到ACK包后，进入ESTABLISHED状态。然后根据服务端发来的SYN(K)包，返回给服务端一个ACK(K+1)包。服务端收到ACK回复后，也把自己的状态设置为ESTABLISHED。</p></li></ol><p>==四次挥手过程==</p><ol><li><p>客户端发送一个FIN(M)包，此时客户端进入FIN-WAIT-1状态，这表明客户端已经没有数据要发送了。</p></li><li><p>服务端收到了客户端发来的FIN(M)包后，向客户端发回一个ACK(M+1)包，此时服务端进入CLOSE-WAIT状态，客户端进入FIN-WAIT-2状态。</p></li><li><p>服务端向客户端发送FIN(N)包，请求关闭连接，同时服务端进入LAST-ACK状态。</p></li><li><p>lient收到服务端发送的FIN(N)包，进入TIME-WAIT状态。向服务端发送ACK(N+1)包，服务端收到客户端的ACK(N+1)包以后，进入CLOSE状态；客户端等待一段时间还没有得到回复后判断服务端已正式关闭，进入CLOSE状态。</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;http协议：浏览器与服务器之间通信的协议，主要有请求和响应的过程。基本流程为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在浏览器输入网址&lt;/li&gt;
+&lt;li&gt;浏览器向dns发送请求，获取ip地址&lt;/li&gt;
+&lt;li&gt;浏览器用ip地址向服务器发送请求&lt;/li&gt;
+&lt;li&gt;服务器接收请求后处理&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="http" scheme="http://yoursite.com/tags/http/"/>
+    
+      <category term="tcp" scheme="http://yoursite.com/tags/tcp/"/>
+    
+  </entry>
   
   <entry>
     <title>this 指向</title>
@@ -37,29 +67,6 @@
     
     
       <category term="this" scheme="http://yoursite.com/tags/this/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>微信小程序参考链接</title>
-    <link href="http://yoursite.com/2018/10/23/wechat/"/>
-    <id>http://yoursite.com/2018/10/23/wechat/</id>
-    <published>2018-10-23T06:19:19.924Z</published>
-    <updated>2018-10-23T06:20:11.188Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="微信小程序问题"><a href="#微信小程序问题" class="headerlink" title="微信小程序问题"></a>微信小程序问题</h1><h2 id="分享"><a href="#分享" class="headerlink" title="分享"></a>分享</h2><p><strong><a href="https://developers.weixin.qq.com/miniprogram/dev/api/share.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/api/share.html</a></strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">onShareAppMessage: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        title: <span class="string">''</span>,</span><br><span class="line">        desc: <span class="string">'自定义描述'</span>,</span><br><span class="line">        path: <span class="string">'/page/user?id=123'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="模版消息"><a href="#模版消息" class="headerlink" title="模版消息"></a>模版消息</h2><p><strong><a href="https://developers.weixin.qq.com/miniprogram/dev/api/notice.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/api/notice.html</a></strong></p><h2 id="扫码"><a href="#扫码" class="headerlink" title="扫码"></a>扫码</h2><p><strong><a href="https://developers.weixin.qq.com/miniprogram/dev/api/scancode.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/api/scancode.html</a></strong></p><h2 id="小程序使用iconfont"><a href="#小程序使用iconfont" class="headerlink" title="小程序使用iconfont"></a>小程序使用iconfont</h2><p><strong><a href="https://blog.csdn.net/nongweiyilady/article/details/74244362" target="_blank" rel="noopener">https://blog.csdn.net/nongweiyilady/article/details/74244362</a></strong></p><hr>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;微信小程序问题&quot;&gt;&lt;a href=&quot;#微信小程序问题&quot; class=&quot;headerlink&quot; title=&quot;微信小程序问题&quot;&gt;&lt;/a&gt;微信小程序问题&lt;/h1&gt;&lt;h2 id=&quot;分享&quot;&gt;&lt;a href=&quot;#分享&quot; class=&quot;headerlink&quot; title=&quot;分
-      
-    
-    </summary>
-    
-    
-      <category term="wechat" scheme="http://yoursite.com/tags/wechat/"/>
     
   </entry>
   
